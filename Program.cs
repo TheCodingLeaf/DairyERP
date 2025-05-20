@@ -1,19 +1,33 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.ReactiveUI;
+using DairyERP.Utils;
+using Microsoft.Extensions.Configuration;
 
 namespace DairyERP
 {
     internal sealed class Program
     {
-        // Initialization code. Don't use any Avalonia, third-party APIs or any
-        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-        // yet and stuff might break.
         [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+        public static async Task Main(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
-        // Avalonia configuration, don't remove; also used by visual designer.
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            bool canConnect = await ConnectionTester.TestConnectionAsync(connectionString);
+
+            Debug.Print(canConnect ? "Databaseforbindelse OK!" : "Databaseforbindelse FEJLEDE!");
+
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args);
+        }
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
