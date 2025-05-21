@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,36 @@ namespace DairyERP.ViewModels
 
         }
 
-
-        public void GoToMainUI()
+        private string _UsernameInput;
+        public string UsernameInput
         {
+            get => _UsernameInput;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _UsernameInput, value, nameof(UsernameInput));
+            }
+        }
 
+       
+
+        public void CheckLogin()
+        {
+            string username = "Test123";
+
+            if(UsernameInput == username)
+            {
+                HomePageBtn();
+            }
+            else
+            {
+
+            }
+        }
+
+        //Goes to HomePage 
+        public void HomePageBtn()
+        {
+            MainWindowViewModel.Instance.SetViewModel(new HomePageViewModel());
         }
     }
 }

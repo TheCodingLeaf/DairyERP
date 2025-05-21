@@ -1,4 +1,4 @@
-﻿﻿CREATE TABLE Users (
+﻿CREATE TABLE Users (
     UserID INT IDENTITY(1,1) PRIMARY KEY,
     FirstName NVARCHAR(50) NOT NULL,
     LastName NVARCHAR(50) NOT NULL,
@@ -8,9 +8,10 @@
     PasswordHash NVARCHAR(MAX) NOT NULL,
     CreatedAt DATETIME2 DEFAULT SYSDATETIME(),
     UpdatedAt DATETIME2 NULL,
-    DeletedAt DATETIME2 NULL, --Bruger vi til soft-delete (Så brugeren findes i databasen, men bare ikke findes i programmet fx er planen) 
+    DeletedAt DATETIME2 NULL, -- Bruger vi til soft-delete
     IsActive BIT NOT NULL DEFAULT 1
 );
+GO
 
 CREATE TABLE Customers (
     CustomerID INT IDENTITY(1,1) PRIMARY KEY,
@@ -23,6 +24,7 @@ CREATE TABLE Customers (
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
         ON DELETE CASCADE
 );
+GO
 
 CREATE TABLE Employees (
     EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
@@ -36,3 +38,4 @@ CREATE TABLE Employees (
     FOREIGN KEY (UserID) REFERENCES Users(UserID)
         ON DELETE CASCADE
 );
+GO
