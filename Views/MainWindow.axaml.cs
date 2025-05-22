@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using DairyERP.ViewModels;
 
 namespace DairyERP.Views
 {
@@ -7,6 +8,7 @@ namespace DairyERP.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }

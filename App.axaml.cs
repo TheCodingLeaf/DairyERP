@@ -6,7 +6,7 @@ using DairyERP.Views;
 
 namespace DairyERP
 {
-    public partial class App : Application
+    public class App : Application
     {
         public override void Initialize()
         {
@@ -19,12 +19,14 @@ namespace DairyERP
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataTemplates =
+                    {
+                        new ViewLocator()
+                    }
                 };
             }
 
             base.OnFrameworkInitializationCompleted();
         }
-
     }
 }

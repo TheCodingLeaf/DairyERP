@@ -7,7 +7,6 @@
         x:Class="DairyERP.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="DairyERP"
-		Content="{Binding ContentViewModel}">
-	VIRKER IK
+        Title="DairyERP">
+	<ContentControl Content="{Binding ContentViewModel}" />
 </Window>

@@ -1,47 +1,42 @@
 ﻿using ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reactive;
+using DairyERP.ViewModels;
 
 namespace DairyERP.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        public LoginViewModel()
-        {
-
-        }
+        public ReactiveCommand<Unit, Unit> CheckLoginCommand { get; }
 
         private string _UsernameInput;
         public string UsernameInput
         {
             get => _UsernameInput;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _UsernameInput, value, nameof(UsernameInput));
-            }
+            set => this.RaiseAndSetIfChanged(ref _UsernameInput, value);
         }
 
-       
-
-        public void CheckLogin()
+        public LoginViewModel()
         {
-            string username = "Test123";
+            // Initialiser kommandoen og bind den til metoden
+            CheckLoginCommand = ReactiveCommand.Create(CheckLogin);
+        }
 
-            if(UsernameInput == username)
+        private void CheckLogin()
+        {
+            string correctUsername = "Test123";
+
+            if (UsernameInput == correctUsername)
             {
                 HomePageBtn();
             }
             else
             {
-
+                // TODO: Giv fejlbesked
             }
         }
 
-        //Goes to HomePage 
-        public void HomePageBtn()
+        private void HomePageBtn()
         {
             MainWindowViewModel.Instance.SetViewModel(new HomePageViewModel());
         }
